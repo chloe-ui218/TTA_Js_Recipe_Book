@@ -1,17 +1,37 @@
-const recipe = [
+const recipes = [
     {
-        title: "Spaghetti Bolognese",
-        ingredients: "spaghetti, Ground Beef, Tomatoes Sauce, Onion, Garlic, Olive Oli",
-        steps: "1. Boil Pasta. 2.Cook Ground Beef. 3.Add Tomatoes Sauce, and Garlic. 4.Serve Over cooked pasta.", 
+        title: "spaghetti Bolognese",
+        ingredients: "spaghetti, Ground Beef, Tomato Sauce, Onions, Garlic, Olive Oil",
+        steps: "1. Boil Pasta. 2. Cook Ground Beef. 3. Add Sauce and garlic, Onion, and Garlic. 4. Mix with pasta."
     },
+
     {
         title: "Chicken Curry",
-        ingredients: "Chicken, Curry Powder, Coconut Milk, Onions, Garlic, Ginger",
-        steps: "1. Cook Chicken. 2. Add Onions, Garlic, Ginger. 3. Add Coconut Milk and Curry Powder. 4. Simmer."
+        ingredients: "chicken, Curry powder, coconut milk, Onions, Garlic, Ginger",
+        steps: "1. Cook chicken. 2. Add onions, garlic, ginger. 3. Add coconut milk and curry powder. 4. simmer."
     },
+
     {
         title: "Vegetable Stir-fry",
-        ingredients: "Broccoli, Carrots, Bell Peppers, Soy Sauce, Olive Oli",
-        steps: "1. Stir-fry vegetables in olive oil. 2. Add garlic and soy sauce. 3. Serve with rice."
+        ingredients: "Broccoli, Carrots, Bell peppers, Soy sauce, Garlic, Olive Oil",
+        steps: "1. Stir-fry vegetables on olive oil. 2. Add garlic and soy sauce. 3. serve with rice."
     }
 ];
+
+const displayRecipes = () => {
+    const recipeList = document.querySelector('#recipeList');
+    recipeList.innerHTML = "";
+
+    recipes.forEach((recipe) => {
+        const recipeCard = document.createElement("div");
+        recipeCard.classList.add("bg-white", "p-4", "rounded", "shadow", "mb-4");
+        recipeCard.innerHTML = `
+            <h2 class="text-xl font-bold">${recipe.title}</h2>
+            <p class="font-bold text-gray-600"><strong>Ingredients: &emsp;</strong>${recipe.ingredients}</p>
+            <p class="text-sm"><strong>Steps: &emsp;</strong>${recipe.steps}</p>}
+        `;
+        recipeList.appendChild(recipeCard);
+    })
+}
+
+displayRecipes();
