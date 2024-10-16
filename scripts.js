@@ -51,7 +51,7 @@ const addRecipe = (event) => {
 
    document.getElementById("recipeTitle").value = "";
    document.getElementById("recipeIngredients").value = "";
-   document.getElementById("recipeIngredients").value = "";
+   document.getElementById("recipeSteps").value = "";
 
     displayRecipes();
 
