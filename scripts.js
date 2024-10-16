@@ -42,6 +42,15 @@ const addRecipe = (event) => {
    const recipeSteps = document.getElementById("recipeSteps").value.trim();
 
  if(recipeTitle !== "" && recipeIngredients !== "" && recipeSteps.trim() !== "") {
+
+    const isDuplicate = recipes.some((recipe) => recipe.title.toLowerCase() === recipeTitle.toLowerCase());
+
+    if (isDuplicate) {
+        alert("Recipe already exists");
+    } else {
+
+    }
+
     const newRecipe = {
         title: recipeTitle,
         ingredients: recipeIngredients,
@@ -57,7 +66,7 @@ const addRecipe = (event) => {
 
 } else{
     alert("Please fill out all fields");
-}
+  }
 }
 
 // const recipeForm = document.getElementById("recipeForm");
