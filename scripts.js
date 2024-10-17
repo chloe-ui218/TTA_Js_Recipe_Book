@@ -28,7 +28,9 @@ const displayRecipes = () => {
         recipeCard.innerHTML = `
             <h2 class="text-xl font-bold">${recipe.title}</h2>
             <p class="font-bold text-gray-600"><strong>Ingredients: &emsp;</strong>${recipe.ingredients}</p>
-            <p class="text-sm"><strong>Steps: &emsp;</strong>${recipe.steps}</p>}
+            <p class="text-sm"><strong>Steps: &emsp;</strong>${recipe.steps}</p>
+            <button class="bg-blue-500 px-2 py-1 mt-4 rounded mt-2">Edit</button>
+            <button class="bg-red-500 text-white px-2 py-1 rounded mt-2">Delete</button>
         `;
         recipeList.appendChild(recipeCard);
     })
@@ -68,12 +70,10 @@ const addRecipe = (event) => {
     alert("Please fill out all fields");
   }
 }
-
+displayRecipes();
 // const recipeForm = document.getElementById("recipeForm");
 // recipeForm.addEventListener("submit", addRecipe);
 
 document.getElementById("addRecipe").addEventListener("click", addRecipe);
-
-displayRecipes();
 
 
