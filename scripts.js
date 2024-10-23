@@ -36,6 +36,17 @@ const displayRecipes = () => {
     })
 }
 
+const saveRecipeToLocalStorage = () => {
+    localStorage.setItem("recipes", JSON.stringify(recipes));
+}
+const loadRecipesFromLocalStorage = () => {
+    const storedRecipes = localStorage.getItem("recipes");
+
+    if (storedRecipes) {
+        recipes = JSON.parse(storedRecipes);
+    }
+}
+
 const showError = (elementId, message) => {
     const errorElement = document.getElementById(elementId);
     errorElement.innerText = message;
