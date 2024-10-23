@@ -36,19 +36,44 @@ const displayRecipes = () => {
     })
 }
 
+const showError = (elementId, message) => {
+    const errorElement = document.getElementById(elementId);
+    errorElement.innerText = message;
+    errorElement.classList.remove("hidden");
+}
+
+const hideError = (elementId) => {
+    const errorElement = document.getElementById(elementId);
+    errorElement.classList.add("hidden");
+}
+
 const addRecipe = (event) => {
     event.preventDefault();
 
    const recipeTitle = document.getElementById("recipeTitle").value.trim();
    const recipeIngredients = document.getElementById("recipeIngredients").value.trim();
    const recipeSteps = document.getElementById("recipeSteps").value.trim();
+}
 
- if(recipeTitle !== "" && recipeIngredients !== "" && recipeSteps.trim() !== "") {
+   
+ // if(recipeTitle !== "" && recipeIngredients !== "" && recipeSteps.trim() !== "") {
+ hideError("titleError");
+ hideError("ingredientsError");
+ hideError("stepsError");
 
+ let invalid = true;
+
+ if(recipeTitle === "") {
+    showError("titleError", "please enter the recipe title");
+    isValid = false;
+    
+ }
+ if (isValid){
     const isDuplicate = recipes.some((recipe) => recipe.title.toLowerCase() === recipeTitle.toLowerCase());
 
     if (isDuplicate) {
         alert("Recipe already exists");
+    }
     } else {
 
     }
@@ -66,10 +91,11 @@ const addRecipe = (event) => {
 
     displayRecipes();
 
-} else{
-    alert("Please fill out all fields");
-  }
-}
+// } else {
+   // alert("Please fill out all fields");
+// }
+ 
+
 displayRecipes();
 // const recipeForm = document.getElementById("recipeForm");
 // recipeForm.addEventListener("submit", addRecipe);
