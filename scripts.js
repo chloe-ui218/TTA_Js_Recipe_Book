@@ -66,6 +66,10 @@ const addRecipe = (event) => {
  if(recipeTitle === "") {
     showError("titleError", "please enter the recipe title");
     isValid = false;
+
+    if(recipeIngredients === "") {
+        showError("ingredientsError", "Please enter the recipe ingredients");
+    }
     
  }
  if (isValid){
