@@ -26,20 +26,38 @@ let recipes = [
 
 const displayRecipes = () => {
     const recipeList = document.querySelector('#recipeList');
-   //recipeList.innerHTML = "";
+   recipeList.innerHTML = "";
 
     if (recipeList) {
         recipes.forEach((recipe, index) => {
             const recipeCard = document.createElement("div");
             recipeCard.classList.add("bg-white", "p-4", "rounded", "shadow", "mb-4");
-    
             recipeCard.innerHTML = `
-                <h2 class="text-xl font-bold">${recipe.title}</h2>
-                <p class="font-bold text-gray-600"><strong>Ingredients: &emsp;</strong>${recipe.ingredients}</p>
+          
+    
+                <h2 class="text-xl font-bold" id="titleDisplay-${index}">${recipe.title}</h2>
+                 <input type="text" id="titleInput-${index}" class="hidden border p-2 w-full rounded-lg"
+                  value="${recipe.title}">
+
+                <p class="font-bold text-gray-600"><strong>Ingredients: &emsp;
+                </strong>${recipe.ingredients}</p>
+                <textarea id="ingredientsInput-${index}" class="hidden border p-2 w-full rounded-lg">$
+                {recipe.ingredients}</textarea>
+
+
                 <p class="text-sm"><strong>Steps: &emsp;</strong>${recipe.steps}</p>
-                <button class="bg-blue-500 text-white px-2  py-1 rounded mt-2" onclick="editRecipe(${index})">
-                Edit</button>
-                <button class="bg-red-500 text-white px-2  py-1 rounded mt-2" onclick="deleteRecipe(${index})"> Delete</button>
+                <textarea id="stepsInput-${index}" class="hidden border p-2 w-full rounded-lg">$
+                {recipe.steps}</textarea>
+
+
+                <button class="bg-blue-500 text-white px-2  py-1 rounded mt-2 id="editBtn-$"conclick="editRecipe(
+                ${index})" >Edit</button>
+               
+                <button class="bg-red-500 text-white px-2  py-1 rounded mt-2" id="deleteBtn" onclick="deleteRecipe(${index})">
+                 Delete</button>
+
+                 <button class='bg-green-500 text-white px-2 py-1 rounded mt-2 hidden" id="saveBtn-${index}"
+                 onclick="saveRecipes(${index})"Save</button>
             `;
             recipeList.appendChild(recipeCard);
         })
@@ -81,16 +99,42 @@ const addRecipe = () => {
 
 }
 
-const editRecipe = (index) => {
-    const UpdateRecipeTitle = prompt("Enter new recipe title");
-    const UpdateRecipeIngredients = prompt("Enter new recipe ingredients", recipes[index].ingredients);
-    const UpdateRecipeSteps = prompt ("Enter the new recipe steps", recipes[index].steps);
+//const editRecipe = (index) => {
+   // const UpdateRecipeTitle = prompt("Enter new recipe title");
+    //const UpdateRecipeIngredients = prompt("Enter new recipe ingredients", recipes[index].ingredients);
+    //const UpdateRecipeSteps = prompt ("Enter the new recipe steps", recipes[index].steps);
 
-    if (UpdateRecipeTitle && UpdateRecipeIngredients && UpdateRecipeSteps) {
-        recipes[index].title = UpdateRecipeTitle;
-        recipes[index].ingredients = UpdateRecipeIngredients;
-        recipes[index].steps = UpdateRecipeSteps;
-    }
+   // if (UpdateRecipeTitle && UpdateRecipeIngredients && UpdateRecipeSteps) {
+      //  recipes[index].title = UpdateRecipeTitle;
+      //  recipes[index].ingredients = UpdateRecipeIngredients;
+       // recipes[index].steps = UpdateRecipeSteps;
+   // }
+//}
+
+const editRecipe = (index) => {
+    document.getElementById(`titleDisplay-${index}`).classList.add("hidden");
+    document.getElementById(`ingredientsDisplay-${index}`).classList.add("hidden");
+    document.getElementById(`stepsDisplay-${index}`).classList.add("hidden");
+
+    document.getElementById(`titleInput-${index}`).classList.remove("hidden");
+    document.getElementById(`ingredientsInput-${index}`).classList.remove("hidden");
+    document.getElementById(`stepsInput-${index}`).classList.remove("hidden");
+
+    document.getElementById(`saveBtn-${index}`).classList.remove("hidden");
+    document.getElementById(`cancelBtn-${index}`).classList.remove("hidden");
+}
+
+const cancleEdit = (index) => {
+    document.getElementById(`titleDisplay-${index}`).classList.remove("hidden");
+    document.getElementById(`ingredientsDisplay-${index}`).classList.remove("hidden");
+    document.getElementById(`stepsDisplay-${index}`).classList.remove("hidden");
+
+    document.getElementById(`titleInput-${index}`).classList.add("hidden");
+    document.getElementById(`ingredientsInput-${index}`).classList.add("hidden");
+    document.getElementById(`stepsInput-${index}`).classList.add("hidden");
+
+    document.getElementById(`saveBtn-${index}`).classList.add("hidden");
+    document.getElementById(`cancelBtn-${index}`).classList.add("hidden");
 }
 
 const deleteRecipe = (index) => {
