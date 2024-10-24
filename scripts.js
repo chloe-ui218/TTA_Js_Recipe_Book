@@ -124,6 +124,24 @@ const editRecipe = (index) => {
     document.getElementById(`cancelBtn-${index}`).classList.remove("hidden");
 }
 
+const saveRecipe = (index) => {
+    const UpdateRecipeTitle = document.getElementById(`titleInput-${index}`).value.trim;
+    const UpdateRecipeIngredients = document.getElementById(`ingredientsInput-${index}`).value.trim();
+    const UpdateRecipeSteps = document.getElementById(`stepsInput-${index}`).value.trim();
+
+    if (UpdateRecipeTitle && UpdateRecipeIngredients && UpdateRecipeSteps) {
+
+        recipes[index].title = UpdateRecipeTitle;
+        recipes[index].ingredients = UpdateRecipeIngredients;
+        recipes[index].steps = UpdateRecipeSteps;
+        
+        saveRecipeToLocalStorage();
+        displayRecipes();
+ } else{
+    alert("Please enter all the fields");
+ }
+}
+
 const cancleEdit = (index) => {
     document.getElementById(`titleDisplay-${index}`).classList.remove("hidden");
     document.getElementById(`ingredientsDisplay-${index}`).classList.remove("hidden");
@@ -136,6 +154,7 @@ const cancleEdit = (index) => {
     document.getElementById(`saveBtn-${index}`).classList.add("hidden");
     document.getElementById(`cancelBtn-${index}`).classList.add("hidden");
 }
+
 
 const deleteRecipe = (index) => {
     recipes.splice(index, 1);
