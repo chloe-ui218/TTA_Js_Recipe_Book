@@ -164,9 +164,13 @@ const deleteRecipe = (index) => {
 
 const recipeForm = document.getElementById("recipeForm");
 
-    if (recipeForm){
+
+if (recipeForm){
         document.getElementById('recipeForm').addEventListener('submit', addRecipe);
     }
+
+    // const recipeForm = document.getElementById:('recipeForm');
+    // const.sadd eventlistener("submit", addRecipe);
 
        
 displayRecipes();
