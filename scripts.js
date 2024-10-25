@@ -133,7 +133,7 @@ const saveRecipe = (index) => {
 
         recipes[index].title = UpdateRecipeTitle;
         recipes[index].ingredients = UpdateRecipeIngredients;
-        recipes[index].steps = UpdateRecipeSteps;
+        recipes[index].ingredients= UpdateRecipeSteps;
         
         saveRecipeToLocalStorage();
         displayRecipes();
