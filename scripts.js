@@ -1,177 +1,132 @@
 let recipes = [
     {
         title: "Spaghetti Bolognese",
-        ingredients: "spaghetti, Ground Beef, Tomato Sauce, Onions, Garlic, Olive Oil",
-        steps: "1. Boil Pasta. 2. Cook Ground Beef. 3. Add Sauce and garlic, Onion, and Garlic. 4. Mix with pasta."
+        ingredients: "Spaghetti, minced beef, tomato sauce, onion, garlic, Italian herbs.",
+        steps: "1. Cook spaghetti. 2. Sauté onion and garlic. 3. Add minced beef. 4. Stir in tomato sauce and herbs. 5. Serve over spaghetti."
     },
-
     {
         title: "Chicken Curry",
-        ingredients: "chicken, Curry powder, coconut milk, Onions, Garlic, Ginger",
-        steps: "1. Cook chicken. 2. Add onions, garlic, ginger. 3. Add coconut milk and curry powder. 4. simmer."
-    },
-
-    {
-        title: "Vegetable Stir-fry",
-        ingredients: "Broccoli, Carrots, Bell peppers, Soy sauce, Garlic, Olive Oil",
-        steps: "1. Stir-fry vegetables on olive oil. 2. Add garlic and soy sauce. 3. serve with rice."
-    },
-    {
-        title: "Pancakes",
-        ingredients: "Flour, Eggs, Milk, Sugar, Baking Powder, Salt",
-        steps: "Mix ingredients in a bowl. 2. Pour butter on a hot griddle. 3. Flip pancake when bubbles form."
+        ingredients: "Chicken, curry powder, coconut milk, onion, garlic, ginger.",
+        steps: "1. Sauté onion, garlic, and ginger. 2. Add chicken and cook. 3. Stir in curry powder. 4. Add coconut milk and simmer. 5. Serve with rice."
     }
-
 ];
 
-const displayRecipes = () => {
-    const recipeList = document.querySelector('#recipeList');
-   recipeList.innerHTML = "";
+const displayRecipe = () => {
+    const recipeList = document.querySelector("#recipeList");
+    recipeList.innerHTML = "";
 
-    if (recipeList) {
-        recipes.forEach((recipe, index) => {
-            const recipeCard = document.createElement("div");
-            recipeCard.classList.add("bg-white", "p-4", "rounded", "shadow", "mb-4");
-            recipeCard.innerHTML = `
-          
-    
-                <h2 class="text-xl font-bold" id="titleDisplay-${index}">${recipe.title}</h2>
-                 <input type="text" id="titleInput-${index}" class="hidden border p-2 w-full rounded-lg"
-                  value="${recipe.title}">
+    recipes.forEach((recipe, index) => {
+        const recipeCard = document.createElement("div");
+        recipeCard.classList.add("bg-white", "p-4", "rounded", "shadow", "mb-4");
 
-                <p class="font-bold text-gray-600"><strong>Ingredients: &emsp;
-                </strong>${recipe.ingredients}</p>
-                <textarea id="ingredientsInput-${index}" class="hidden border p-2 w-full rounded-lg">$
-                {recipe.ingredients}</textarea>
+        recipeCard.innerHTML = `
+        <h2 class="text-lg font-bold">${recipe.title}</h2>
+        <h3 class="text-sm font-thin text-gray-700"><strong>Ingredients: </strong>${recipe.ingredients}</h3>
+        <h3 class="text-sm font-thin"><strong>Steps: </strong>${recipe.steps}</h3>
+        <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2" onclick="editRecipe(${index})">Edit</button>
+        <button class="bg-red-500 text-white px-2 py-1 rounded mt-2" onclick="deleteRecipe(${index})">Delete</button>
+        `;
+        recipeList.appendChild(recipeCard);
+    });
+};
 
-
-                <p class="text-sm"><strong>Steps: &emsp;</strong>${recipe.steps}</p>
-                <textarea id="stepsInput-${index}" class="hidden border p-2 w-full rounded-lg">$
-                {recipe.steps}</textarea>
-
-
-                <button class="bg-blue-500 text-white px-2  py-1 rounded mt-2 id="editBtn-$"conclick="editRecipe(
-                ${index})" >Edit</button>
-               
-                <button class="bg-red-500 text-white px-2  py-1 rounded mt-2" id="deleteBtn" onclick="deleteRecipe(${index})">
-                 Delete</button>
-
-                 <button class='bg-green-500 text-white px-2 py-1 rounded mt-2 hidden" id="saveBtn-${index}"
-                 onclick="saveRecipes(${index})"Save</button>
-            `;
-            recipeList.appendChild(recipeCard);
-        })
-    }
-}
-
-const saveRecipeToLocalStorage = (recipe) => {
+const saveRecipeToLocalStorage = () => {
     localStorage.setItem("recipes", JSON.stringify(recipes));
-}
+};
 
 const loadRecipesFromLocalStorage = () => {
     const storedRecipes = localStorage.getItem("recipes");
 
-    if (storedRecipes){
+    if (storedRecipes) {
         recipes = JSON.parse(storedRecipes);
     }
-}
+};
+
 const showError = (elementId, message) => {
-    const errorElement = document.getElementById(elementId); 
-    if (errorElement) {
-        errorElement.innerText = message;
+    const errorElement = document.getElementById(elementId);
+    errorElement.innerText = message;
     errorElement.classList.remove("hidden");
-    }
-}
+};
 
 const hideError = (elementId) => {
     const errorElement = document.getElementById(elementId);
     errorElement.classList.add("hidden");
-}
+};
 
-const addRecipe = () => {
-    const recipeTitleInput = document.querySelector("#recipeTitle");
-    const recipeIngredientsInput = document.querySelector("#recipeIngredients");
-    const recipesInput = document.querySelector("#recipeSteps");
+const addRecipe = (event) => {
+    event.preventDefault();
 
-    const recipeTitle = recipeTitleInput.value.trim();
-    const recipeIngredients = recipeIngredientsInput.value.trim();
-    const recipeSteps = recipeStepsInput.value.trim();
+    const recipeTitle = document.getElementById("recipeTitle").value.trim();
+    const recipeIngredients = document.getElementById("recipeIngredients").value.trim();
+    const recipeSteps = document.getElementById("recipeSteps").value.trim();
 
-}
+    hideError("titleError");
+    hideError("ingredientsError");
+    hideError("stepsError");
 
-//const editRecipe = (index) => {
-   // const UpdateRecipeTitle = prompt("Enter new recipe title");
-    //const UpdateRecipeIngredients = prompt("Enter new recipe ingredients", recipes[index].ingredients);
-    //const UpdateRecipeSteps = prompt ("Enter the new recipe steps", recipes[index].steps);
+    let isValid = true;
 
-   // if (UpdateRecipeTitle && UpdateRecipeIngredients && UpdateRecipeSteps) {
-      //  recipes[index].title = UpdateRecipeTitle;
-      //  recipes[index].ingredients = UpdateRecipeIngredients;
-       // recipes[index].steps = UpdateRecipeSteps;
-   // }
-//}
+    if (recipeTitle === "") {
+        showError("titleError", "Recipe Title is Required");
+        isValid = false;
+    }
+
+    if (recipeIngredients === "") {
+        showError("ingredientsError", "Ingredients are Required");
+        isValid = false;
+    }
+
+    if (recipeSteps === "") {
+        showError("stepsError", "Steps are Required");
+        isValid = false;
+    }
+
+    if (isValid) {
+        const isDuplicate = recipes.some((recipe) => recipe.title.toLowerCase() === recipeTitle.toLowerCase());
+
+        if (isDuplicate) {
+            alert("Recipe already exists");
+        } else {
+            const newRecipe = {
+                title: recipeTitle,
+                ingredients: recipeIngredients,
+                steps: recipeSteps
+            };
+            recipes.push(newRecipe);
+
+            document.getElementById("recipeTitle").value = "";
+            document.getElementById("recipeIngredients").value = "";
+            document.getElementById("recipeSteps").value = "";
+
+            saveRecipeToLocalStorage();
+            displayRecipe();
+        }
+    }
+};
 
 const editRecipe = (index) => {
-    document.getElementById(`titleDisplay-${index}`).classList.add("hidden");
-    document.getElementById(`ingredientsDisplay-${index}`).classList.add("hidden");
-    document.getElementById(`stepsDisplay-${index}`).classList.add("hidden");
+    const updatedRecipeTitle = prompt("Enter the new recipe title", recipes[index].title);
+    const updatedRecipeIngredients = prompt("Enter the new recipe ingredients", recipes[index].ingredients);
+    const updatedRecipeSteps = prompt("Enter the new recipe steps", recipes[index].steps);
 
-    document.getElementById(`titleInput-${index}`).classList.remove("hidden");
-    document.getElementById(`ingredientsInput-${index}`).classList.remove("hidden");
-    document.getElementById(`stepsInput-${index}`).classList.remove("hidden");
+    if (updatedRecipeTitle && updatedRecipeIngredients && updatedRecipeSteps) {
+        recipes[index].title = updatedRecipeTitle;
+        recipes[index].ingredients = updatedRecipeIngredients;
+        recipes[index].steps = updatedRecipeSteps;
 
-    document.getElementById(`saveBtn-${index}`).classList.remove("hidden");
-    document.getElementById(`cancelBtn-${index}`).classList.remove("hidden");
-}
-
-const saveRecipe = (index) => {
-    const UpdateRecipeTitle = document.getElementById(`titleInput-${index}`).value.trim;
-    const UpdateRecipeIngredients = document.getElementById(`ingredientsInput-${index}`).value.trim();
-    const UpdateRecipeSteps = document.getElementById(`stepsInput-${index}`).value.trim();
-
-    if (UpdateRecipeTitle && UpdateRecipeIngredients && UpdateRecipeSteps) {
-
-        recipes[index].title = UpdateRecipeTitle;
-        recipes[index].ingredients = UpdateRecipeIngredients;
-        recipes[index].ingredients= UpdateRecipeSteps;
-        
         saveRecipeToLocalStorage();
-        displayRecipes();
- } else{
-    alert("Please enter all the fields");
- }
-}
-
-const cancleEdit = (index) => {
-    document.getElementById(`titleDisplay-${index}`).classList.remove("hidden");
-    document.getElementById(`ingredientsDisplay-${index}`).classList.remove("hidden");
-    document.getElementById(`stepsDisplay-${index}`).classList.remove("hidden");
-
-    document.getElementById(`titleInput-${index}`).classList.add("hidden");
-    document.getElementById(`ingredientsInput-${index}`).classList.add("hidden");
-    document.getElementById(`stepsInput-${index}`).classList.add("hidden");
-
-    document.getElementById(`saveBtn-${index}`).classList.add("hidden");
-    document.getElementById(`cancelBtn-${index}`).classList.add("hidden");
-}
-
+        displayRecipe();
+    }
+};
 
 const deleteRecipe = (index) => {
     recipes.splice(index, 1);
     saveRecipeToLocalStorage();
-    displayRecipes();
-}
+    displayRecipe();
+};
 
-const recipeForm = document.getElementById("recipeForm");
+document.getElementById("recipeForm").addEventListener("submit", addRecipe);
 
-
-if (recipeForm){
-        document.getElementById('recipeForm').addEventListener('submit', addRecipe);
-    }
-
-    // const recipeForm = document.getElementById:('recipeForm');
-    // const.sadd eventlistener("submit", addRecipe);
-
-       
-displayRecipes();
+// Load recipes from local storage and display them
 loadRecipesFromLocalStorage();
+displayRecipe();
