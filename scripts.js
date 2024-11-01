@@ -1,4 +1,5 @@
 let recipes = [
+    
     {
         title: "Spaghetti Bolognese",
         ingredients: "Spaghetti, minced beef, tomato sauce, onion, garlic, Italian herbs.",
@@ -8,7 +9,12 @@ let recipes = [
         title: "Chicken Curry",
         ingredients: "Chicken, curry powder, coconut milk, onion, garlic, ginger.",
         steps: "1. Sauté onion, garlic, and ginger. 2. Add chicken and cook. 3. Stir in curry powder. 4. Add coconut milk and simmer. 5. Serve with rice."
-    }
+    },
+    {
+        title: "Vegetable stir-fry",
+        ingredients: "Broccoli, carrots, bell peppers, soy sauce, garlic, olive oil.",
+        steps: "1. Stir-fry vegetables in olive oil. 2. Add garlic and soy sauce. 3. Serve with rice."
+    },
 ];
 
 const displayRecipe = () => {
@@ -20,11 +26,11 @@ const displayRecipe = () => {
         recipeCard.classList.add("bg-white", "p-4", "rounded", "shadow", "mb-4");
 
         recipeCard.innerHTML = `
-        <h2 class="text-lg font-bold">${recipe.title}</h2>
-        <h3 class="text-sm font-thin text-gray-700"><strong>Ingredients: </strong>${recipe.ingredients}</h3>
-        <h3 class="text-sm font-thin"><strong>Steps: </strong>${recipe.steps}</h3>
-        <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2" onclick="editRecipe(${index})">Edit</button>
-        <button class="bg-red-500 text-white px-2 py-1 rounded mt-2" onclick="deleteRecipe(${index})">Delete</button>
+            <h2 class="text-lg font-bold">${recipe.title}</h2>
+            <h3 class="text-sm font-thin text-gray-700"><strong>Ingredients: </strong>${recipe.ingredients}</h3>
+            <h3 class="text-sm font-thin"><strong>Steps: </strong>${recipe.steps}</h3>
+            <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2" onclick="editRecipe(${index})">Edit</button>
+            <button class="bg-red-500 text-white px-2 py-1 rounded mt-2" onclick="deleteRecipe(${index})">Delete</button>
         `;
         recipeList.appendChild(recipeCard);
     });
