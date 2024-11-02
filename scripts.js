@@ -1,5 +1,4 @@
 let recipes = [
-    
     {
         title: "Spaghetti Bolognese",
         ingredients: "Spaghetti, minced beef, tomato sauce, onion, garlic, Italian herbs.",
@@ -16,6 +15,8 @@ let recipes = [
         steps: "1. Stir-fry vegetables in olive oil. 2. Add garlic and soy sauce. 3. Serve with rice."
     },
 ];
+
+let currentRecipeIndex = null; // Track which recipe is being edited
 
 const displayRecipe = () => {
     const recipeList = document.querySelector("#recipeList");
@@ -42,7 +43,6 @@ const saveRecipeToLocalStorage = () => {
 
 const loadRecipesFromLocalStorage = () => {
     const storedRecipes = localStorage.getItem("recipes");
-
     if (storedRecipes) {
         recipes = JSON.parse(storedRecipes);
     }
@@ -59,7 +59,7 @@ const hideError = (elementId) => {
     errorElement.classList.add("hidden");
 };
 
-const addRecipe = (event) => {
+const addOrUpdateRecipe = (event) => {
     event.preventDefault();
 
     const recipeTitle = document.getElementById("recipeTitle").value.trim();
@@ -76,63 +76,64 @@ const addRecipe = (event) => {
         showError("titleError", "Recipe Title is Required");
         isValid = false;
     }
-
     if (recipeIngredients === "") {
         showError("ingredientsError", "Ingredients are Required");
         isValid = false;
     }
-
     if (recipeSteps === "") {
         showError("stepsError", "Steps are Required");
         isValid = false;
     }
 
     if (isValid) {
-        const isDuplicate = recipes.some((recipe) => recipe.title.toLowerCase() === recipeTitle.toLowerCase());
+        if (currentRecipeIndex !== null) {
 
-        if (isDuplicate) {
-            alert("Recipe already exists");
+            recipes[currentRecipeIndex] = {
+                title: recipeTitle,
+                ingredients: recipeIngredients,
+                steps: recipeSteps
+            };
+            currentRecipeIndex = null;
+            document.querySelector("button[type='submit']").innerText = "Add Recipe";
         } else {
+         
             const newRecipe = {
                 title: recipeTitle,
                 ingredients: recipeIngredients,
                 steps: recipeSteps
             };
             recipes.push(newRecipe);
-
-            document.getElementById("recipeTitle").value = "";
-            document.getElementById("recipeIngredients").value = "";
-            document.getElementById("recipeSteps").value = "";
-
-            saveRecipeToLocalStorage();
-            displayRecipe();
         }
-    }
-};
 
-const editRecipe = (index) => {
-    const updatedRecipeTitle = prompt("Enter the new recipe title", recipes[index].title);
-    const updatedRecipeIngredients = prompt("Enter the new recipe ingredients", recipes[index].ingredients);
-    const updatedRecipeSteps = prompt("Enter the new recipe steps", recipes[index].steps);
-
-    if (updatedRecipeTitle && updatedRecipeIngredients && updatedRecipeSteps) {
-        recipes[index].title = updatedRecipeTitle;
-        recipes[index].ingredients = updatedRecipeIngredients;
-        recipes[index].steps = updatedRecipeSteps;
-
+        document.getElementById("recipeForm").reset();
         saveRecipeToLocalStorage();
         displayRecipe();
     }
 };
 
-const deleteRecipe = (index) => {
-    recipes.splice(index, 1);
+const editRecipe = (index) => {
+    const updaterecipeTitle = prompt ("Enter the new recipe title", recipes[index].title);
+    const updateRecipeIngredients = prompt ("Enter the new recipe Ingredients", recipes[index].ingredients);
+    const updateRecipeSteps = prompt ("Enter the new recipe steps");
+
+    if(updateRecipeTitle && updateRecipeIngredients && updateRecipeSteps){
+        recipes[index].title = updateRecipeTitle;
+        recipes[index].ingredients = updateRecipeIngredients;
+        recipes[index].steps = updateRecipeSteps;
+    }
+}
+
+   // currentRecipeIndex = index; 
+    //document.querySelector("button[type='submit']").innerText = "Update Recipe";
+//};
+
+//const deleteRecipe = (index) => {
+  //  recipes.splice(index, 1);
     saveRecipeToLocalStorage();
     displayRecipe();
-};
+//};
 
-document.getElementById("recipeForm").addEventListener("submit", addRecipe);
+//document.getElementById("recipeForm").addEventListener("submit", addOrUpdateRecipe);
 
-// Load recipes from local storage and display them
 loadRecipesFromLocalStorage();
 displayRecipe();
